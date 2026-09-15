@@ -4,7 +4,7 @@
 
 This repository is Voxdara.
 
-Voxdara is a local-first desktop AI dictation application derived from the open-source Handy codebase.
+Voxdara is a Handy-derived, open-source, local-first Windows desktop AI dictation application.
 
 The product goal is:
 
@@ -21,52 +21,110 @@ The default product path must work locally without a paid API.
 
 ## Current Phase
 
-Phase 0 — Handy Baseline Verification
+Phase 1 — Voxdara Visual Foundation
 
-The current objective is only to prove that the inherited Handy application can build and run successfully on the user's Windows machine.
+The working dictation architecture is proven. The visual transformation is intentionally separated from dictation internals.
 
-Required baseline path:
+Current rule:
 
-build
-→ launch
-→ global hotkey
-→ microphone capture
-→ local STT
-→ text inserted into another Windows application
+Handy determines what exists. Voxdara determines how it looks.
 
-Do not begin product transformation until this baseline is verified.
+## Planning and Implementation Gate
 
-## Current Scope
+Planning is authorized now. Claude Opus may inspect the repository, current UI, architecture evidence, baseline screenshots, accepted Voxdara design references, brand assets, and approved design skills to produce:
 
-Allowed during Phase 0:
+- Voxdara UI Design Contract v1
+- one frozen Phase 1 implementation plan
 
-- inspect repository files
-- inspect build configuration
-- install documented development dependencies when explicitly authorized
-- run documented build commands
-- run the application
-- gather build/runtime evidence
-- diagnose baseline build/runtime failures
-- apply only the smallest fix when a baseline-blocking defect is proven and the user explicitly authorizes implementation
+Production visual changes are allowed only after:
 
-Do not during Phase 0:
+- the Phase 1 plan is frozen
+- the user approves it
+- implementation occurs on a dedicated Phase 1 branch
+- implementation stays within the frozen scope
+- automated and human visual/runtime verification pass
 
-- rebrand Handy to Voxdara
-- redesign the UI
-- replace icons or assets
-- change package identifiers
-- change updater infrastructure
-- change signing infrastructure
-- remove product features
-- add cleanup LLMs
-- add cloud providers
-- add provider routing
-- replace STT engines
-- restructure the architecture
-- perform broad refactors
-- optimize performance before baseline measurement
-- work on macOS or Linux unless explicitly requested
-- fix unrelated upstream issues
+This does not authorize a general unrestricted redesign.
+
+## Authorized Visual Scope
+
+Under a frozen, user-approved Phase 1 plan, work may include:
+
+- Voxdara brand assets
+- visible Voxdara wordmark
+- application-icon artwork or resources when the change is purely visual
+- semantic design tokens
+- typography, spacing, radii, borders, and restrained elevation or motion rules
+- icon-system architecture
+- styling existing UI primitives
+- visual accessibility improvements
+- replacement of visible Handy branding when the replacement is purely presentational
+
+Later Voxdara visual phases may use the approved design system and design skills without another repository-policy rewrite, but each phase still requires its own frozen scope and approval.
+
+## Approved Visual Evidence
+
+Accepted visual reference board:
+
+`C:\Projects\Voxdara\.local-evidence\voxdara-design-reference-2026-09-15\voxdara-reference-board.png`
+
+Accepted brand-reference assets:
+
+- `C:\Projects\Voxdara\design\brand\source\voxdara-wordmark-reference.png`
+- `C:\Projects\Voxdara\design\brand\source\voxdara-symbol-reference.png`
+
+The reference board is art direction and a quality target, not a pixel-exact specification or a feature specification. Agents may refine spacing, typography, density, accessibility, component consistency, icon implementation, and visual details when that produces a stronger real desktop UI. Do not create functionality merely because it appears in the concept board; current source and runtime behavior remain functional truth.
+
+Do not creatively redesign the accepted Voxdara logo or symbol geometry without explicit user approval. Production-safe derivatives may later be prepared from the accepted artwork while preserving the accepted identity.
+
+## Approved Design Skills
+
+The following installed skills are approved when relevant for Phase 1 and subsequent Voxdara visual phases:
+
+- `frontend-design`
+- `design-system`
+- `redesign-existing-projects`
+
+They are guidance, not authority. Use this precedence:
+
+current Voxdara source and runtime evidence
+→ repository architecture and policy
+→ accepted Voxdara brand and design references
+→ approved design skills
+→ agent design judgment
+
+A skill must never override actual product behavior, architecture boundaries, or explicit user decisions. Do not use `gpt-taste`. Do not apply web- or marketing-oriented patterns that are inappropriate for a restrained desktop dictation application.
+
+## Protected Architecture
+
+Phase 1 visual authorization does not authorize changes to:
+
+- `TranscriptionCoordinator`
+- the `TranscribeAction` lifecycle
+- `AudioRecordingManager`
+- `AudioRecorder`
+- `TranscriptionManager`
+- STT behavior or streaming/batch behavior
+- VAD
+- `clipboard::paste` or `paste_tx`
+- focus restoration or focus behavior
+- recording-overlay no-activate behavior
+- shortcut backends
+- `handy_keys` or `handy-keys` contracts
+- settings persistence semantics
+- `com.pais.handy` or user-data migration
+- updater endpoint or key
+- signing or release infrastructure
+- model hosting
+- `cjpais/*` dependency forks
+- patched `tao`
+- DLL staging
+- generated bindings behavior
+- cross-platform behavior
+
+Do not globally rename every Handy occurrence. Internal identifiers such as `handy_keys` are not branding. Changing the Tauri `productName`, executable name, installer name, bundle identity, identifier, or user-data paths is not automatically visual work.
+
+Phase 1 also does not authorize removing product features; adding cleanup LLMs, cloud providers, or provider routing; replacing STT engines; restructuring the architecture; broad refactors; performance optimization; unrelated upstream fixes; or macOS/Linux work unless explicitly approved.
 
 ## Upstream Relationship
 
@@ -78,7 +136,7 @@ Treat Handy as the upstream engineering foundation.
 
 Do not assume upstream behavior is correct for Voxdara long-term, but preserve working inherited infrastructure until Voxdara has verified replacements.
 
-Do not remove required upstream license or attribution notices.
+Preserve existing Handy/CJ Pais MIT attribution and source provenance. Replacing visible Handy branding does not remove upstream code provenance. Do not remove or replace upstream copyright or attribution notices with Voxdara-only notices.
 
 ## Architecture
 
@@ -254,9 +312,7 @@ Use one branch and one pull request per development phase.
 
 Do not commit directly to main unless the user explicitly requests it.
 
-Current working branch:
-
-phase/0-handy-baseline
+Phase 1 production visual implementation must use its dedicated Phase 1 branch and must not occur directly on main.
 
 Before creating commits:
 
