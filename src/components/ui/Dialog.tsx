@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
+import { CloseIcon } from "../icons";
 
 const FOCUSABLE_SELECTOR = [
   "a[href]",
@@ -168,15 +168,15 @@ export const Dialog: React.FC<DialogProps> = ({
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
         tabIndex={-1}
-        className={`flex max-h-[calc(100dvh-2rem)] w-full max-w-lg flex-col overflow-hidden rounded-lg border border-mid-gray/20 bg-background shadow-xl outline-none sm:max-h-[calc(100dvh-3rem)] ${className}`}
+        className={`flex max-h-[calc(100dvh-2rem)] w-full max-w-lg flex-col overflow-hidden rounded-lg border border-border bg-surface-raised shadow-raised outline-none sm:max-h-[calc(100dvh-3rem)] ${className}`}
       >
-        <div className="flex shrink-0 items-start justify-between gap-3 border-b border-mid-gray/20 px-4 py-2.5">
+        <div className="flex shrink-0 items-start justify-between gap-3 border-b border-border px-4 py-2">
           <div className="min-w-0">
             <h2 id={titleId} className="text-base font-semibold text-text">
               {title}
             </h2>
             {description && (
-              <p id={descriptionId} className="mt-1 text-sm text-mid-gray">
+              <p id={descriptionId} className="mt-0.5 text-xs text-text-muted">
                 {description}
               </p>
             )}
@@ -186,9 +186,9 @@ export const Dialog: React.FC<DialogProps> = ({
               type="button"
               onClick={() => onOpenChange(false)}
               aria-label={closeLabel}
-              className="shrink-0 cursor-pointer rounded-md border border-transparent p-1 text-mid-gray transition-colors hover:border-mid-gray/20 hover:bg-mid-gray/10 hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-logo-primary"
+              className="inline-flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-md border border-transparent text-text-muted transition-colors duration-150 hover:bg-surface-subtle hover:text-text active:bg-selected focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
             >
-              <X className="h-4 w-4" aria-hidden="true" />
+              <CloseIcon className="size-4" aria-hidden="true" />
             </button>
           )}
         </div>
@@ -199,7 +199,7 @@ export const Dialog: React.FC<DialogProps> = ({
           {children}
         </div>
         {footer && (
-          <div className="flex shrink-0 justify-end gap-2 border-t border-mid-gray/20 px-4 py-3">
+          <div className="flex shrink-0 justify-end gap-2 border-t border-border px-4 py-3">
             {footer}
           </div>
         )}

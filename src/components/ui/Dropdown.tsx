@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { CheckIcon, ChevronDownIcon } from "../icons";
 
 export interface DropdownOption {
   value: string;
@@ -65,37 +66,30 @@ export const Dropdown: React.FC<DropdownProps> = ({
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         type="button"
-        className={`px-2 py-[5px] text-sm font-semibold bg-mid-gray/10 border border-mid-gray/80 rounded-md min-w-[200px] w-full text-start grid grid-cols-[1fr_auto] gap-2 items-center transition-all duration-150 ${
+        className={`grid h-8 min-w-[200px] w-full grid-cols-[1fr_auto] items-center gap-2 rounded-md border bg-surface px-3 text-start text-sm font-normal text-text transition-colors duration-150 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring ${
+          isOpen ? "border-text" : "border-border-strong"
+        } ${
           disabled
-            ? "opacity-50 cursor-not-allowed"
-            : "hover:bg-logo-primary/10 cursor-pointer hover:border-logo-primary"
+            ? "cursor-not-allowed border-border bg-background text-text-disabled"
+            : "cursor-pointer"
         }`}
         onClick={handleToggle}
         disabled={disabled}
       >
         <span className="truncate">{selectedOption?.label || placeholder}</span>
-        <svg
-          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "transform rotate-180" : ""}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+        <ChevronDownIcon
+          className={`size-4 transition-[transform] duration-150 ${isOpen ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
       </button>
       {isOpen && !disabled && (
         <div
-          className={`absolute top-full mt-1 bg-background border border-mid-gray/80 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto ${
+          className={`absolute top-full z-50 mt-1 max-h-60 overflow-y-auto rounded-lg border border-border bg-surface-raised p-1 shadow-raised ${
             menuClassName ?? "left-0 right-0"
           }`}
         >
           {options.length === 0 ? (
-            <div className="px-2 py-1 text-sm text-mid-gray">
+            <div className="p-2 text-sm text-text-muted">
               {t("common.noOptionsFound")}
             </div>
           ) : (
@@ -103,27 +97,28 @@ export const Dropdown: React.FC<DropdownProps> = ({
               <button
                 key={option.value}
                 type="button"
-                className={`w-full text-sm text-start hover:bg-logo-primary/10 transition-colors duration-150 ${
-                  option.description ? "px-3 py-2" : "px-2 py-1"
-                } ${
-                  selectedValue === option.value ? "bg-logo-primary/20" : ""
-                } ${option.disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`grid w-full grid-cols-[1fr_auto] items-center gap-2 rounded-md px-3 text-start text-sm transition-colors duration-150 hover:bg-surface-subtle ${
+                  option.description ? "py-2" : "h-8"
+                } ${selectedValue === option.value ? "bg-selected font-medium" : ""} ${
+                  option.disabled
+                    ? "cursor-not-allowed text-text-disabled hover:bg-transparent"
+                    : "cursor-pointer"
+                }`}
                 onClick={() => handleSelect(option.value)}
                 disabled={option.disabled}
               >
-                <span
-                  className={`block whitespace-normal break-words ${
-                    option.description || selectedValue === option.value
-                      ? "font-semibold"
-                      : ""
-                  }`}
-                >
-                  {option.label}
-                </span>
-                {option.description && (
-                  <span className="mt-0.5 block whitespace-normal text-xs font-normal leading-snug text-mid-gray">
-                    {option.description}
+                <span className="min-w-0">
+                  <span className="block whitespace-normal break-words">
+                    {option.label}
                   </span>
+                  {option.description && (
+                    <span className="mt-0.5 block whitespace-normal text-xs font-normal text-text-muted">
+                      {option.description}
+                    </span>
+                  )}
+                </span>
+                {selectedValue === option.value && (
+                  <CheckIcon className="size-4" aria-hidden="true" />
                 )}
               </button>
             ))

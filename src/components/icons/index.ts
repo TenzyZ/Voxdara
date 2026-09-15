@@ -1,3 +1,17 @@
-export { default as MicrophoneIcon } from "./MicrophoneIcon";
-export { default as TranscriptionIcon } from "./TranscriptionIcon";
-export { default as CancelIcon } from "./CancelIcon";
+export {
+  Info as InfoIcon,
+  ChevronDown as ChevronDownIcon,
+  Check as CheckIcon,
+  X as CloseIcon,
+  RotateCcw as ResetIcon,
+  CircleAlert as ErrorIcon,
+  TriangleAlert as WarningIcon,
+  CircleCheck as SuccessIcon,
+  SlidersHorizontal as GeneralIcon,
+  History as HistoryIcon,
+  Cpu as ModelsIcon,
+  Cog as AdvancedIcon,
+  Sparkles as PostProcessingIcon,
+  FlaskConical as DebugIcon,
+  Info as AboutIcon,
+} from "lucide-react";

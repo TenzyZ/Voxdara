@@ -15,16 +15,14 @@ export const SettingsGroup: React.FC<SettingsGroupProps> = ({
     <div className="space-y-2">
       {title && (
         <div className="px-4">
-          <h2 className="text-xs font-medium text-mid-gray uppercase tracking-wide">
-            {title}
-          </h2>
+          <h2 className="text-sm font-semibold text-text">{title}</h2>
           {description && (
-            <p className="text-xs text-mid-gray mt-1">{description}</p>
+            <p className="mt-0.5 text-xs text-text-muted">{description}</p>
           )}
         </div>
       )}
-      <div className="bg-background border border-mid-gray/20 rounded-lg overflow-visible">
-        <div className="divide-y divide-mid-gray/20">{children}</div>
+      <div className="overflow-visible rounded-lg border border-border bg-surface">
+        <div className="divide-y divide-border">{children}</div>
       </div>
     </div>
   );

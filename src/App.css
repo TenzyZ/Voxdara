@@ -29,8 +29,8 @@
   --color-warning: var(--color-warning);
   --color-error: var(--color-error);
   --shadow-raised: var(--shadow-raised);
-  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system,
-    sans-serif;
+  --font-sans:
+    "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "Cascadia Mono", Consolas, ui-monospace, monospace;
 }
 
