@@ -13,17 +13,10 @@ on:
         required: false
         type: string
         default: ""
-      release-id:
-        required: false
-        type: string
       asset-prefix:
         required: false
         type: string
         default: "handy"
-      asset-name-pattern:
-        required: false
-        type: string
-        default: ""
       upload-artifacts:
         required: false
         type: boolean
@@ -48,13 +41,10 @@ on:
         type: boolean
         default: false
 
-env:
-  TSC_VERSION: "0.9.0"
-
 jobs:
   build:
     permissions:
-      contents: write
+      contents: read
     runs-on: ${{ inputs.platform }}
     steps:
       # Kept for git checkout and general tooling headroom. The native
@@ -163,18 +153,6 @@ jobs:
           version: 1.4.309.0
           cache: true
 
-      - name: Cache trusted-signing-cli
-        if: contains(inputs.platform, 'windows') && inputs.sign-binaries
-        id: cache-tsc
-        uses: actions/cache@v5
-        with:
-          path: ~/.cargo/bin/trusted-signing-cli*
-          key: trusted-signing-cli-${{ env.TSC_VERSION }}-${{ runner.os }}-${{ runner.arch }}
-
-      - name: Install trusted-signing-cli
-        if: contains(inputs.platform, 'windows') && inputs.sign-binaries && steps.cache-tsc.outputs.cache-hit != 'true'
-        run: cargo install --locked --force trusted-signing-cli@${{ env.TSC_VERSION }}
-
       - name: Prepare Vulkan SDK for Ubuntu 24.04
         if: contains(inputs.platform, 'ubuntu-24.04') && !contains(inputs.platform, 'arm')
         run: |
@@ -241,19 +219,6 @@ jobs:
           CERT_ID=$(echo "$CERT_INFO" | awk -F'"' '{print $2}')
           echo "CERT_ID=$CERT_ID" >> $GITHUB_ENV
           echo "Certificate imported."
-
-      - name: Patch asset name pattern
-        id: patch-release-name
-        shell: bash
-        if: ${{ inputs.release-id != '' && inputs.asset-name-pattern != '' }}
-        run: |
-          platform="${{ inputs.platform }}"
-          replacement="$(echo ${platform} | sed -E 's/-latest//')"
-          patched_platform=$(echo '${{ inputs.asset-name-pattern }}' | sed -E "s/\[platform\]/${replacement}/")
-          if [[ -n "${{ inputs.asset-prefix }}" ]]; then
-            patched_platform="${{ inputs.asset-prefix }}_${patched_platform}"
-          fi
-          echo "platform=${patched_platform}" >> $GITHUB_OUTPUT
 
       # ggml refuses to build its ARM CPU backend under MSVC (upstream check in
       # ggml/src/ggml-cpu/CMakeLists.txt: "MSVC is not supported for ARM, use
@@ -333,30 +298,6 @@ jobs:
           }
           Write-Host "HANDY_VC_REDIST_DIRS=$dirs"
           Add-Content -Path $env:GITHUB_ENV -Value "HANDY_VC_REDIST_DIRS=$dirs"
-
-      # MSI packaging verifies bundled .dll/.exe resources with signtool before
-      # custom signing. Tauri's SDK lookup has no ARM64 host mapping, so pass
-      # the tool explicitly once ARM64 starts bundling runtime DLLs.
-      - name: Point tauri-bundler at signtool.exe (Windows ARM64)
-        if: contains(inputs.platform, 'windows') && contains(inputs.target, 'aarch64')
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = 'Stop'
-          $bin = "${env:ProgramFiles(x86)}\Windows Kits\10\bin"
-          $candidates = @(
-            Get-ChildItem "$bin\10.0.*\arm64\signtool.exe" -ErrorAction SilentlyContinue
-            Get-ChildItem "$bin\10.0.*\x64\signtool.exe" -ErrorAction SilentlyContinue
-          ) | Where-Object { $_ }
-          if (-not $candidates) {
-            throw "signtool.exe not found under $bin (is a Windows SDK installed on this runner?)"
-          }
-          # Prefer native arm64 (x64 works too, under emulation); within an
-          # arch, the newest SDK version wins.
-          $signtool = $candidates |
-            Sort-Object { $_.FullName -match '\\arm64\\' }, FullName |
-            Select-Object -Last 1
-          Write-Host "TAURI_WINDOWS_SIGNTOOL_PATH=$($signtool.FullName)"
-          Add-Content -Path $env:GITHUB_ENV -Value "TAURI_WINDOWS_SIGNTOOL_PATH=$($signtool.FullName)"
 
       - name: Install ONNX Runtime (x86_64 macOS)
         if: inputs.target == 'x86_64-apple-darwin'
@@ -523,9 +464,6 @@ jobs:
           APPLE_CERTIFICATE: ${{ inputs.sign-binaries && secrets.APPLE_CERTIFICATE || '' }}
           APPLE_CERTIFICATE_PASSWORD: ${{ inputs.sign-binaries && secrets.APPLE_CERTIFICATE_PASSWORD || '' }}
           APPLE_SIGNING_IDENTITY: ${{ inputs.sign-binaries && env.CERT_ID || '' }}
-          AZURE_CLIENT_ID: ${{ inputs.sign-binaries && secrets.AZURE_CLIENT_ID || '' }}
-          AZURE_CLIENT_SECRET: ${{ inputs.sign-binaries && secrets.AZURE_CLIENT_SECRET || '' }}
-          AZURE_TENANT_ID: ${{ inputs.sign-binaries && secrets.AZURE_TENANT_ID || '' }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ inputs.sign-binaries && secrets.TAURI_SIGNING_PRIVATE_KEY || '' }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ inputs.sign-binaries && secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD || '' }}
           # The Vulkan loader and Wayland client library must come from the host
@@ -539,10 +477,6 @@ jobs:
           # X-AppImage-Version for desktop integration tools such as Gear Lever.
           LINUXDEPLOY_OUTPUT_VERSION: ${{ contains(inputs.platform, 'ubuntu') && steps.get-version.outputs.version || '' }}
         with:
-          tagName: ${{ inputs.release-id && format('v{0}', steps.get-version.outputs.version) || '' }}
-          releaseName: ${{ inputs.release-id && format('v{0}', steps.get-version.outputs.version) || '' }}
-          releaseId: ${{ inputs.release-id }}
-          assetNamePattern: ${{ steps.patch-release-name.outputs.platform }}
           args: ${{ inputs.build-args }}
 
       # tauri-action uploads release assets before returning. All AppImage
@@ -828,7 +762,7 @@ jobs:
             }
           }
 
-          # Both installer types must contain every staged DLL and launch.
+          # The NSIS installer must contain every staged DLL and launch.
           function Assert-PackageContents {
             param([string]$Root, [string]$Label)
 
@@ -872,34 +806,11 @@ jobs:
             Remove-Item -Recurse -Force $installDir
           }
 
-          # Administrative install extracts the MSI payload without elevation.
-          $msiPackages = Get-ChildItem (Join-Path $bundleBase "msi") -Filter "*.msi" -ErrorAction SilentlyContinue
-          if (-not $msiPackages) {
-            throw "No MSI packages found under $bundleBase for runtime DLL audit"
-          }
-
-          foreach ($pkg in $msiPackages) {
-            Write-Host "Auditing MSI package: $($pkg.FullName)"
-            $installDir = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid().ToString())
-            New-Item -ItemType Directory -Path $installDir | Out-Null
-            $logFile = Join-Path $installDir "msi-admin-install.log"
-            # Keep quoting explicit and place public properties last.
-            $msiArgs = "/a `"$($pkg.FullName)`" /qn /L*v `"$logFile`" TARGETDIR=`"$installDir`""
-            $proc = Start-Process -FilePath "msiexec.exe" -ArgumentList $msiArgs -Wait -PassThru
-            if ($proc.ExitCode -ne 0) {
-              if (Test-Path $logFile) { Get-Content $logFile | Out-Host }
-              throw "Administrative install failed for $($pkg.FullName) with exit code $($proc.ExitCode)"
-            }
-            Assert-PackageContents -Root $installDir -Label "Installed MSI"
-            Remove-Item -Recurse -Force $installDir
-          }
-
       - name: Upload artifacts (Windows)
         if: inputs.upload-artifacts && contains(inputs.platform, 'windows')
         uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs.asset-prefix }}-${{ inputs.target }}
-          path: |
-            src-tauri/target/${{ inputs.target != '' && inputs.target != 'x86_64-pc-windows-msvc' && format('{0}/{1}', inputs.target, steps.build-profile.outputs.profile) || steps.build-profile.outputs.profile }}/bundle/msi/*.msi
-            src-tauri/target/${{ inputs.target != '' && inputs.target != 'x86_64-pc-windows-msvc' && format('{0}/{1}', inputs.target, steps.build-profile.outputs.profile) || steps.build-profile.outputs.profile }}/bundle/nsis/*.exe
+          path: src-tauri/target/${{ inputs.target != '' && inputs.target != 'x86_64-pc-windows-msvc' && format('{0}/{1}', inputs.target, steps.build-profile.outputs.profile) || steps.build-profile.outputs.profile }}/bundle/nsis/*.exe
+          if-no-files-found: error
           retention-days: 30

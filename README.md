@@ -1,27 +1,38 @@
-# Handy
+# Voxdara
 
-[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/WVBeWsNXK4)
+**Open-source, local-first AI dictation for Windows.**
 
-**A free, open source, and extensible speech-to-text application that works completely offline.**
+Press a shortcut, speak, and Voxdara transcribes locally before inserting the result into the active application.
 
-Handy is a cross-platform desktop application that provides simple, privacy-focused speech transcription. Press a shortcut, speak, and have your words appear in any text field. This happens on your own computer without sending any information to the cloud.
+## Download / Install Voxdara
 
-## Why Handy?
+### Windows x64
 
-Handy was created to fill the gap for a truly open source, extensible speech-to-text tool. As stated on [handy.computer](https://handy.computer):
+<a href="https://github.com/TenzyZ/Voxdara/releases/download/v0.9.7-alpha.1/Voxdara-0.9.7-alpha.1-win-x64.exe"><img src="design/brand/production/voxdara-app-icon-1024.png" alt="Download Voxdara for Windows x64" width="160"></a>
 
-- **Free**: Accessibility tooling belongs in everyone's hands, not behind a paywall
-- **Open Source**: Together we can build further. Extend Handy for yourself and contribute to something bigger
-- **Private**: Your voice stays on your computer. Get transcriptions without sending audio to the cloud
-- **Simple**: One tool, one job. Transcribe what you say and put it into a text box
+**[Download Voxdara for Windows x64](https://github.com/TenzyZ/Voxdara/releases/download/v0.9.7-alpha.1/Voxdara-0.9.7-alpha.1-win-x64.exe)**
 
-Handy isn't trying to be the best speech-to-text app—it's trying to be the most forkable one.
+Version `0.9.7-alpha.1` · [SHA-256 checksum](https://github.com/TenzyZ/Voxdara/releases/download/v0.9.7-alpha.1/Voxdara-0.9.7-alpha.1-win-x64.exe.sha256) · [Release notes](https://github.com/TenzyZ/Voxdara/blob/main/.github/release-notes/v0.9.7-alpha.1.md)
+
+> [!NOTE]
+> This is an unsigned preview. Windows SmartScreen may show an **Unknown publisher** warning. Automatic updates are disabled; download future releases manually.
+
+1. Download the installer.
+2. Double-click `Voxdara-0.9.7-alpha.1-win-x64.exe`.
+3. Complete the installation.
+4. Launch Voxdara.
+5. Complete first-run model setup if prompted.
+6. Start dictating.
+
+### Build from source
+
+Developers can follow [BUILD.md](BUILD.md). Packaged-app users do not need the development toolchain.
 
 ## How It Works
 
 1. **Press** a configurable keyboard shortcut: hold it to record and release to stop, or tap it to toggle recording on and off (Hold-only and Toggle-only modes are also available)
 2. **Speak** your words while the shortcut is active
-3. **Release** and Handy processes your speech using Whisper
+3. **Release** and Voxdara processes your speech locally
 4. **Get** your transcribed text pasted directly into whatever app you're using
 
 The process is entirely local:
@@ -31,23 +42,6 @@ The process is entirely local:
   - **Whisper models** (Small/Medium/Turbo/Large) with GPU acceleration when available
   - **Parakeet V3** - CPU-optimized model with excellent performance and automatic language detection
 - Works on Windows, macOS, and Linux
-
-## Quick Start
-
-### Installation
-
-1. Download the latest release from the [releases page](https://github.com/cjpais/Handy/releases) or the [website](https://handy.computer)
-   - **macOS**: Also available via [Homebrew cask](https://formulae.brew.sh/cask/handy): `brew install --cask handy`
-   - **Windows**: Also available via [winget](https://github.com/microsoft/winget-pkgs): `winget install cjpais.Handy` \
-     **Note:** The Homebrew cask and winget package are not maintained by the Handy developers.
-2. Install the application
-3. Launch Handy and grant necessary system permissions (microphone, accessibility)
-4. Configure your preferred keyboard shortcuts in Settings
-5. Start transcribing!
-
-### Development Setup
-
-For detailed build instructions including platform-specific requirements, see [BUILD.md](BUILD.md).
 
 ## Integrations
 
@@ -285,41 +279,6 @@ We're actively working on several features and improvements. Contributions and f
 
 - Abstract and organize Tauri command patterns
 - Investigate tauri-specta for improved type safety and organization
-
-## Verify Release Signatures
-
-Handy release artifacts are signed with Tauri's updater signature format. The public key is stored in [`src-tauri/tauri.conf.json`](src-tauri/tauri.conf.json) under `plugins.updater.pubkey`.
-
-To verify a release manually, set `ARTIFACT` to the filename you downloaded, save the `pubkey` value from `src-tauri/tauri.conf.json` to `handy.pub.b64`, then decode the public key and matching `.sig` file from base64 and verify the artifact with `minisign`:
-
-```bash
-# Replace with the file you downloaded
-ARTIFACT="Handy_0.8.1_amd64.AppImage"
-
-python3 - "$ARTIFACT" <<'PY'
-import base64, pathlib, sys
-
-artifact = sys.argv[1]
-
-pub = pathlib.Path("handy.pub.b64").read_text().strip()
-pathlib.Path("handy.pub").write_bytes(base64.b64decode(pub))
-
-sig = pathlib.Path(f"{artifact}.sig").read_text().strip()
-pathlib.Path(f"{artifact}.minisig").write_bytes(base64.b64decode(sig))
-PY
-
-minisign -Vm "$ARTIFACT" \
-  -p handy.pub \
-  -x "$ARTIFACT.minisig"
-```
-
-On success, `minisign` prints:
-
-```text
-Signature and comment signature verified
-```
-
-Do not use `gpg` for these `.sig` files.
 
 ## Troubleshooting
 

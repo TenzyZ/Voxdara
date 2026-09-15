@@ -1,83 +1,92 @@
-name: "Release"
+name: "Windows Preview"
 
 on: workflow_dispatch
 
 jobs:
-  create-release:
+  build-windows:
     permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    outputs:
-      release-id: ${{ steps.create-release.outputs.result }}
-      version: ${{ steps.get-version.outputs.version }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Get version from tauri.conf.json
-        id: get-version
-        shell: bash
-        run: |
-          VERSION=$(grep -o '"version": "[^"]*"' src-tauri/tauri.conf.json | cut -d'"' -f4)
-          echo "Application version from tauri.conf.json: $VERSION"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Create Draft Release
-        id: create-release
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const { data } = await github.rest.repos.createRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag_name: `v${{ steps.get-version.outputs.version }}`,
-              name: `v${{ steps.get-version.outputs.version }}`,
-              draft: true,
-              prerelease: false,
-              generate_release_notes: true
-            })
-            return data.id
-
-  publish-tauri:
-    permissions:
-      contents: write
-    needs: create-release
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: "macos-26" # for Arm based macs (M1 and above). Uses macOS 26 for Apple Intelligence SDK.
-            args: "--target aarch64-apple-darwin"
-            target: "aarch64-apple-darwin"
-          - platform: "macos-latest" # for Intel based macs.
-            args: "--target x86_64-apple-darwin"
-            target: "x86_64-apple-darwin"
-          - platform: "ubuntu-22.04" # Build .deb on 22.04
-            args: "--bundles deb"
-            target: "x86_64-unknown-linux-gnu"
-          - platform: "ubuntu-24.04" # Build AppImage and RPM on 24.04
-            args: "--bundles appimage,rpm"
-            target: "x86_64-unknown-linux-gnu"
-          - platform: "ubuntu-24.04-arm" # Build for ARM64 Linux
-            args: "--bundles appimage,deb,rpm"
-            target: "aarch64-unknown-linux-gnu"
-          - platform: "windows-latest"
-            args: ""
-            target: "x86_64-pc-windows-msvc"
-          - platform: "windows-11-arm" # for ARM64 Windows runner
-            args: "--target aarch64-pc-windows-msvc"
-            target: "aarch64-pc-windows-msvc"
-
+      contents: read
     uses: ./.github/workflows/build.yml
     with:
-      platform: ${{ matrix.platform }}
-      target: ${{ matrix.target }}
-      build-args: ${{ matrix.args }}
-      sign-binaries: true
-      asset-prefix: "handy"
-      upload-artifacts: false
-      release-id: ${{ needs.create-release.outputs.release-id }}
-      # Releases always build from scratch — never restore the Rust cache, so a
-      # stale cached native lib can never be linked into a shipped artifact.
+      platform: windows-latest
+      target: x86_64-pc-windows-msvc
+      ref: ${{ github.sha }}
+      sign-binaries: false
+      asset-prefix: voxdara-windows-preview
+      upload-artifacts: true
       no-cache: true
-    secrets: inherit
+
+  create-draft-prerelease:
+    if: github.ref == 'refs/heads/main'
+    needs: build-windows
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout the built main commit
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Download verified Windows installer
+        uses: actions/download-artifact@v8
+        with:
+          name: voxdara-windows-preview-x86_64-pc-windows-msvc
+          path: candidate
+
+      - name: Prepare release assets
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+
+          VERSION=$(node -p "require('./src-tauri/tauri.conf.json').version")
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-[0-9A-Za-z.-]+$ ]]; then
+            echo "Expected a prerelease version, got: $VERSION" >&2
+            exit 1
+          fi
+
+          TAG="v$VERSION"
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "Tag already exists: $TAG" >&2
+            exit 1
+          fi
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release already exists: $TAG" >&2
+            exit 1
+          fi
+
+          mapfile -t installers < <(find candidate -type f -name '*.exe')
+          if [[ ${#installers[@]} -ne 1 ]]; then
+            echo "Expected exactly one NSIS installer, found ${#installers[@]}" >&2
+            exit 1
+          fi
+
+          mkdir release-assets
+          INSTALLER="Voxdara-$VERSION-win-x64.exe"
+          mv "${installers[0]}" "release-assets/$INSTALLER"
+          (
+            cd release-assets
+            sha256sum "$INSTALLER" > "$INSTALLER.sha256"
+          )
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "installer=$INSTALLER" >> "$GITHUB_OUTPUT"
+
+      - name: Create draft prerelease
+        shell: bash
+        run: |
+          gh release create "${{ steps.release.outputs.tag }}" \
+            "release-assets/${{ steps.release.outputs.installer }}" \
+            "release-assets/${{ steps.release.outputs.installer }}.sha256" \
+            --draft \
+            --prerelease \
+            --latest=false \
+            --target "$GITHUB_SHA" \
+            --title "Voxdara ${{ steps.release.outputs.tag }} (Windows x64 Preview)" \
+            --notes-file ".github/release-notes/${{ steps.release.outputs.tag }}.md"

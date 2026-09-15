@@ -493,7 +493,7 @@
       "updateChecks": {
         "label": "Check for Updates",
         "description": "Automatically check for new versions of Handy",
-        "lockedDescription": "Disabled by system configuration (HANDY_DISABLE_UPDATER)"
+        "lockedDescription": "Update checking is disabled in this Voxdara preview"
       },
       "whatsNewPreview": {
         "title": "Preview What's New",
