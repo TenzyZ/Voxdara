@@ -1,77 +1,148 @@
-/* Handy Colors */
-
 :root {
-  /* Palette source of truth. Each themed color is defined once as a
-     light/dark pair; the active tokens below and the `data-theme` overrides
-     in App.css reference these, so a hex value lives in exactly one place. */
-  --light-color-text: #0f0f0f;
-  --light-color-background: #fbfbfb;
-  --light-color-logo-primary: #faa2ca;
+  --light-color-background: #f6f6f7;
+  --light-color-surface: #ffffff;
+  --light-color-surface-subtle: #f1f1f3;
+  --light-color-surface-raised: #ffffff;
+  --light-color-text: #111315;
+  --light-color-text-muted: #676b72;
+  --light-color-text-disabled: #8a8e95;
+  --light-color-border: #e3e4e7;
+  --light-color-border-strong: #8a8e95;
+  --light-color-interactive: #111315;
+  --light-color-interactive-hover: #2c3035;
+  --light-color-interactive-active: #000000;
+  --light-color-on-interactive: #ffffff;
+  --light-color-selected: #e9eaed;
+  --light-color-focus-ring: #111315;
+  --light-color-activity: #2563eb;
+  --light-color-success: #1f7a45;
+  --light-color-warning: #b45309;
+  --light-color-error: #c81e1e;
   --light-color-logo-stroke: #382731;
+  --light-shadow-raised:
+    0 4px 12px rgb(17 19 21 / 0.1), 0 1px 2px rgb(17 19 21 / 0.06);
 
-  --dark-color-text: #fbfbfb;
-  --dark-color-background: #2c2b29;
-  --dark-color-logo-primary: #f28cbb;
-  --dark-color-logo-stroke: #fad1ed;
-
-  /* Semantic status colors. First used by SecureInputWarning; intended to
-     replace the ad-hoc yellow-500/red-500 usages (e.g. ui/Alert.tsx) over
-     time so status styling is themeable from one place. */
-  --light-color-warning: #d97706;
-  --light-color-error: #dc2626;
+  --dark-color-background: #151719;
+  --dark-color-surface: #1c1f22;
+  --dark-color-surface-subtle: #25292d;
+  --dark-color-surface-raised: #23272b;
+  --dark-color-text: #f2f3f5;
+  --dark-color-text-muted: #a7abb2;
+  --dark-color-text-disabled: #6f747b;
+  --dark-color-border: #2e3236;
+  --dark-color-border-strong: #6f747b;
+  --dark-color-interactive: #f2f3f5;
+  --dark-color-interactive-hover: #d8dbdf;
+  --dark-color-interactive-active: #ffffff;
+  --dark-color-on-interactive: #111315;
+  --dark-color-selected: #30353b;
+  --dark-color-focus-ring: #f2f3f5;
+  --dark-color-activity: #5b9bff;
+  --dark-color-success: #4cc37a;
   --dark-color-warning: #fbbf24;
   --dark-color-error: #f87171;
+  --dark-color-logo-stroke: #fad1ed;
+  --dark-shadow-raised: 0 6px 16px rgb(0 0 0 / 0.45);
 
-  /* Tokens that do not change between light and dark */
-  --color-background-ui: #da5893;
-  --color-text-stroke: #f6f6f6;
-  --color-mid-gray: #808080;
-
-  /* Active palette — defaults to light, follows the OS via the media query
-     below, or is forced by `data-theme` (see the overrides below). */
-  --color-text: var(--light-color-text);
   --color-background: var(--light-color-background);
-  --color-logo-primary: var(--light-color-logo-primary);
-  --color-logo-stroke: var(--light-color-logo-stroke);
+  --color-surface: var(--light-color-surface);
+  --color-surface-subtle: var(--light-color-surface-subtle);
+  --color-surface-raised: var(--light-color-surface-raised);
+  --color-text: var(--light-color-text);
+  --color-text-muted: var(--light-color-text-muted);
+  --color-text-disabled: var(--light-color-text-disabled);
+  --color-border: var(--light-color-border);
+  --color-border-strong: var(--light-color-border-strong);
+  --color-interactive: var(--light-color-interactive);
+  --color-interactive-hover: var(--light-color-interactive-hover);
+  --color-interactive-active: var(--light-color-interactive-active);
+  --color-on-interactive: var(--light-color-on-interactive);
+  --color-selected: var(--light-color-selected);
+  --color-focus-ring: var(--light-color-focus-ring);
+  --color-activity: var(--light-color-activity);
+  --color-success: var(--light-color-success);
   --color-warning: var(--light-color-warning);
   --color-error: var(--light-color-error);
+  --color-logo-stroke: var(--light-color-logo-stroke);
+  --color-text-stroke: #f6f6f6;
+  --shadow-raised: var(--light-shadow-raised);
+
+  /* Compatibility aliases for untouched inherited UI. */
+  --color-mid-gray: var(--color-text-muted);
+  --color-logo-primary: var(--color-interactive);
+  --color-background-ui: var(--color-interactive);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-text: var(--dark-color-text);
     --color-background: var(--dark-color-background);
-    --color-logo-primary: var(--dark-color-logo-primary);
-    --color-logo-stroke: var(--dark-color-logo-stroke);
+    --color-surface: var(--dark-color-surface);
+    --color-surface-subtle: var(--dark-color-surface-subtle);
+    --color-surface-raised: var(--dark-color-surface-raised);
+    --color-text: var(--dark-color-text);
+    --color-text-muted: var(--dark-color-text-muted);
+    --color-text-disabled: var(--dark-color-text-disabled);
+    --color-border: var(--dark-color-border);
+    --color-border-strong: var(--dark-color-border-strong);
+    --color-interactive: var(--dark-color-interactive);
+    --color-interactive-hover: var(--dark-color-interactive-hover);
+    --color-interactive-active: var(--dark-color-interactive-active);
+    --color-on-interactive: var(--dark-color-on-interactive);
+    --color-selected: var(--dark-color-selected);
+    --color-focus-ring: var(--dark-color-focus-ring);
+    --color-activity: var(--dark-color-activity);
+    --color-success: var(--dark-color-success);
     --color-warning: var(--dark-color-warning);
     --color-error: var(--dark-color-error);
+    --color-logo-stroke: var(--dark-color-logo-stroke);
+    --shadow-raised: var(--dark-shadow-raised);
   }
 }
 
-/*
- * Explicit theme override, driven by the `theme` setting via
- * `document.documentElement.dataset.theme`. When set, the higher-specificity
- * attribute selectors win over the `prefers-color-scheme` media query above,
- * so a user can keep Handy light or dark regardless of the OS setting.
- * `system` (or no attribute) leaves the OS in charge.
- *
- * Lives here (not in App.css) so every window that imports the shared palette —
- * the settings window and the recording overlay alike — honours the override.
- */
 :root[data-theme="light"] {
-  --color-text: var(--light-color-text);
   --color-background: var(--light-color-background);
-  --color-logo-primary: var(--light-color-logo-primary);
-  --color-logo-stroke: var(--light-color-logo-stroke);
+  --color-surface: var(--light-color-surface);
+  --color-surface-subtle: var(--light-color-surface-subtle);
+  --color-surface-raised: var(--light-color-surface-raised);
+  --color-text: var(--light-color-text);
+  --color-text-muted: var(--light-color-text-muted);
+  --color-text-disabled: var(--light-color-text-disabled);
+  --color-border: var(--light-color-border);
+  --color-border-strong: var(--light-color-border-strong);
+  --color-interactive: var(--light-color-interactive);
+  --color-interactive-hover: var(--light-color-interactive-hover);
+  --color-interactive-active: var(--light-color-interactive-active);
+  --color-on-interactive: var(--light-color-on-interactive);
+  --color-selected: var(--light-color-selected);
+  --color-focus-ring: var(--light-color-focus-ring);
+  --color-activity: var(--light-color-activity);
+  --color-success: var(--light-color-success);
   --color-warning: var(--light-color-warning);
   --color-error: var(--light-color-error);
+  --color-logo-stroke: var(--light-color-logo-stroke);
+  --shadow-raised: var(--light-shadow-raised);
 }
 
 :root[data-theme="dark"] {
-  --color-text: var(--dark-color-text);
   --color-background: var(--dark-color-background);
-  --color-logo-primary: var(--dark-color-logo-primary);
-  --color-logo-stroke: var(--dark-color-logo-stroke);
+  --color-surface: var(--dark-color-surface);
+  --color-surface-subtle: var(--dark-color-surface-subtle);
+  --color-surface-raised: var(--dark-color-surface-raised);
+  --color-text: var(--dark-color-text);
+  --color-text-muted: var(--dark-color-text-muted);
+  --color-text-disabled: var(--dark-color-text-disabled);
+  --color-border: var(--dark-color-border);
+  --color-border-strong: var(--dark-color-border-strong);
+  --color-interactive: var(--dark-color-interactive);
+  --color-interactive-hover: var(--dark-color-interactive-hover);
+  --color-interactive-active: var(--dark-color-interactive-active);
+  --color-on-interactive: var(--dark-color-on-interactive);
+  --color-selected: var(--dark-color-selected);
+  --color-focus-ring: var(--dark-color-focus-ring);
+  --color-activity: var(--dark-color-activity);
+  --color-success: var(--dark-color-success);
   --color-warning: var(--dark-color-warning);
   --color-error: var(--dark-color-error);
+  --color-logo-stroke: var(--dark-color-logo-stroke);
+  --shadow-raised: var(--dark-shadow-raised);
 }
