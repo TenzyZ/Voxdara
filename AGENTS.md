@@ -1,218 +1,279 @@
-# AGENTS.md
+# Voxdara Repository Instructions
 
-This file provides guidance to AI coding assistants working with code in this repository.
+## Project Identity
 
-## Development Commands
+This repository is Voxdara.
 
-**Prerequisites:**
+Voxdara is a local-first desktop AI dictation application derived from the open-source Handy codebase.
 
-- [Rust](https://rustup.rs/) (latest stable)
-- [Bun](https://bun.sh/) package manager
+The product goal is:
 
-**Core Development:**
+hotkey
+→ microphone capture
+→ local speech-to-text
+→ optional text cleanup
+→ final text
+→ active desktop application
+
+Voxdara is not a voice chatbot, general-purpose AI assistant, or meeting-notes platform.
+
+The default product path must work locally without a paid API.
+
+## Current Phase
+
+Phase 0 — Handy Baseline Verification
+
+The current objective is only to prove that the inherited Handy application can build and run successfully on the user's Windows machine.
+
+Required baseline path:
+
+build
+→ launch
+→ global hotkey
+→ microphone capture
+→ local STT
+→ text inserted into another Windows application
+
+Do not begin product transformation until this baseline is verified.
+
+## Current Scope
+
+Allowed during Phase 0:
+
+- inspect repository files
+- inspect build configuration
+- install documented development dependencies when explicitly authorized
+- run documented build commands
+- run the application
+- gather build/runtime evidence
+- diagnose baseline build/runtime failures
+- apply only the smallest fix when a baseline-blocking defect is proven and the user explicitly authorizes implementation
+
+Do not during Phase 0:
+
+- rebrand Handy to Voxdara
+- redesign the UI
+- replace icons or assets
+- change package identifiers
+- change updater infrastructure
+- change signing infrastructure
+- remove product features
+- add cleanup LLMs
+- add cloud providers
+- add provider routing
+- replace STT engines
+- restructure the architecture
+- perform broad refactors
+- optimize performance before baseline measurement
+- work on macOS or Linux unless explicitly requested
+- fix unrelated upstream issues
+
+## Upstream Relationship
+
+The imported codebase originated from:
+
+https://github.com/cjpais/Handy
+
+Treat Handy as the upstream engineering foundation.
+
+Do not assume upstream behavior is correct for Voxdara long-term, but preserve working inherited infrastructure until Voxdara has verified replacements.
+
+Do not remove required upstream license or attribution notices.
+
+## Architecture
+
+Current inherited stack:
+
+- Tauri 2 desktop application
+- Rust backend
+- React + TypeScript frontend
+- Bun package manager
+- local STT through transcribe-cpp / transcribe-rs
+- cpal for audio capture
+- local VAD
+- global shortcuts
+- recording overlay
+- model management
+- clipboard/text injection
+
+Backend:
+
+src-tauri/src/
+
+Important backend areas include:
+
+- managers/
+- audio_toolkit/
+- commands/
+- shortcut handling
+- settings
+- transcription pipeline
+- overlay/platform integration
+
+Frontend:
+
+src/
+
+Important frontend areas include:
+
+- components/
+- settings/
+- model-selector/
+- onboarding/
+- overlay/
+- stores/
+- bindings.ts
+
+Do not rely on this summary instead of inspecting the current repository.
+
+Repository state is authoritative.
+
+## Build Guidance
+
+Read BUILD.md before changing build configuration.
+
+Primary inherited development commands:
 
 ```bash
-# Install dependencies
 bun install
-
-# Run in development mode
 bun run tauri dev
-# If cmake error on macOS:
-CMAKE_POLICY_VERSION_MINIMUM=3.5 bun run tauri dev
 
-# Build for production
-bun run tauri build
+Frontend-only commands:
 
-# Frontend only development
-bun run dev        # Start Vite dev server
-bun run build      # Build frontend (TypeScript + Vite)
-bun run preview    # Preview built frontend
-```
+bun run dev
+bun run build
 
-**Linting and Formatting (run before committing):**
+Validation commands when appropriate:
 
-```bash
-bun run lint              # ESLint for frontend
-bun run lint:fix          # ESLint with auto-fix
-bun run format            # Prettier + cargo fmt
-bun run format:check      # Check formatting without changes
-bun run format:frontend   # Prettier only
-bun run format:backend    # cargo fmt only
-```
+bun run lint
+bun run format:check
 
-**Model Setup (Required for Development):**
+For Windows, BUILD.md documents requirements including:
 
-```bash
-mkdir -p src-tauri/resources/models
-curl -o src-tauri/resources/models/silero_vad_v4.onnx https://blob.handy.computer/silero_vad_v4.onnx
-```
+Rust stable
+Bun
+Microsoft Visual Studio C++ Build Tools
+CMake
+Vulkan SDK
 
-For detailed platform-specific build setup, see [BUILD.md](BUILD.md).
+Do not invent dependencies or installation requirements not confirmed by repository files or official documentation.
 
-## Architecture Overview
+Windows First
 
-Handy is a cross-platform desktop speech-to-text application built with Tauri 2.x (Rust backend + React/TypeScript frontend).
+Voxdara's first supported platform is Windows.
 
-### Backend Structure (src-tauri/src/)
+During current phases, prioritize:
 
-- `lib.rs` - Main entry point, Tauri setup, manager initialization
-- `managers/` - Core business logic:
-  - `audio.rs` - Audio recording and device management
-  - `model.rs` - Model downloading and management
-  - `transcription.rs` - Speech-to-text processing pipeline
-  - `history.rs` - Transcription history storage
-- `audio_toolkit/` - Low-level audio processing:
-  - `audio/` - Device enumeration, recording, resampling
-  - `vad/` - Voice Activity Detection (Silero VAD)
-- `commands/` - Tauri command handlers for frontend communication
-- `cli.rs` - CLI argument definitions (clap derive)
-- `shortcut.rs` - Global keyboard shortcut handling
-- `settings.rs` - Application settings management
-- `overlay.rs` - Recording overlay window (platform-specific)
-- `signal_handle.rs` - `send_transcription_input()` reusable function
-- `utils.rs` - Platform detection helpers
+Windows microphone capture
+Windows hotkeys
+Windows text insertion
+Windows GPU/runtime behavior
+deterministic focus and clipboard behavior
 
-### Frontend Structure (src/)
+Do not expand platform scope without explicit approval.
 
-- `App.tsx` - Main component with onboarding flow
-- `components/` - React UI components:
-  - `settings/` - Settings UI
-  - `model-selector/` - Model management interface
-  - `onboarding/` - First-run experience
-  - `overlay/` - Recording overlay UI
-  - `update-checker/` - App update notifications
-  - `shared/`, `ui/`, `icons/`, `footer/` - Shared components
-- `hooks/useSettings.ts` - Settings state management hook
-- `stores/settingsStore.ts` - Zustand store for settings
-- `bindings.ts` - Auto-generated Tauri type bindings (via tauri-specta)
-- `overlay/` - Recording overlay window entry point
-- `lib/types.ts` - Shared TypeScript type definitions
+Engineering Rules
 
-### Key Architecture Patterns
+Before modifying code:
 
-**Manager Pattern:** Core functionality organized into managers (Audio, Model, Transcription) initialized at startup and managed via Tauri state.
+inspect the relevant files
+identify the failing layer
+gather evidence
+form one hypothesis
+make the smallest justified change
+verify the change
+check regressions
 
-**Command-Event Architecture:** Frontend → Backend via Tauri commands; Backend → Frontend via events.
+Do not rewrite working architecture to solve a localized problem.
 
-**Pipeline Processing:** Audio → VAD → Whisper/Parakeet → Text output → Clipboard/Paste
+Never invent:
 
-**State Flow:** Zustand → Tauri Command → Rust State → Persistence (tauri-plugin-store)
+repository files
+dependency state
+model support
+build results
+benchmark results
+APIs
+licenses
+test outcomes
 
-### Technology Stack
+Clearly distinguish:
 
-**Core Libraries:**
+confirmed repository fact
+inference
+recommendation
+experiment
+Voxdara Product Principles
 
-- `transcribe-cpp` - Local Whisper-family inference (GGML/GGUF) with GPU acceleration
-- `transcribe-rs` - ONNX speech recognition (Parakeet, Moonshine, SenseVoice, etc.)
-- `cpal` - Cross-platform audio I/O
-- `vad-rs` - Voice Activity Detection
-- `rdev` - Global keyboard shortcuts
-- `rubato` - Audio resampling
-- `rodio` - Audio playback for feedback sounds
+Optimize for:
 
-### Application Flow
+low end-to-end latency
+high transcription accuracy
+preservation of speaker intent
+local-first privacy
+reliable paste-anywhere behavior
+simple installation
+replaceable model backends
+measurable performance
+small controlled scope
+finished usable product over oversized prototype
+Privacy
 
-1. **Initialization:** App starts minimized to tray, loads settings, initializes managers
-2. **Model Setup:** First-run downloads preferred Whisper model (Small/Medium/Turbo/Large)
-3. **Recording:** Global shortcut triggers audio recording with VAD filtering
-4. **Processing:** Audio sent to Whisper model for transcription
-5. **Output:** Text pasted to active application via system clipboard
+Local mode must not transmit audio or transcripts off-device.
 
-### Settings System
+Do not silently send:
 
-Settings are stored using Tauri's store plugin with reactive updates:
+microphone audio
+transcripts
+clipboard content
+active-window text
+API keys
 
-- Keyboard shortcuts (configurable, supports push-to-talk)
-- Audio devices (microphone/output selection)
-- Model preferences (Small/Medium/Turbo/Large Whisper variants)
-- Audio feedback and translation options
+Do not add telemetry by default.
 
-### Single Instance Architecture
+Model Terminology
 
-The app enforces single instance behavior — launching when already running brings the settings window to front rather than creating a new process. Remote control flags (`--toggle-transcription`, etc.) work by launching a second instance that sends args to the running instance via `tauri_plugin_single_instance`, then exits.
+Use precise terminology:
 
-## Internationalization (i18n)
+ASR / STT model = audio → text
+local cleanup LLM = text → polished text
+speech-language model = model that directly consumes audio and performs language reasoning
 
-All user-facing strings must use i18next translations. ESLint enforces this (no hardcoded strings in JSX).
+Do not call a text cleanup model a speech LLM.
 
-**Adding new text:**
+Git Workflow
 
-1. Add key to `src/i18n/locales/en/translation.json`
-2. Use in component: `const { t } = useTranslation(); t('key.path')`
+Use one branch and one pull request per development phase.
 
-**File structure:**
+Do not commit directly to main unless the user explicitly requests it.
 
-```
-src/i18n/
-├── index.ts           # i18n setup
-├── languages.ts       # Language metadata
-└── locales/
-    ├── en/translation.json  # English (source)
-    ├── de/, es/, fr/, ja/, ru/, zh/, ...
-    └── ...
-```
+Current working branch:
 
-For translation contribution guidelines, see [CONTRIBUTING_TRANSLATIONS.md](CONTRIBUTING_TRANSLATIONS.md).
+phase/0-handy-baseline
 
-## Code Style
+Before creating commits:
 
-**Rust:**
+inspect git status
+avoid staging unrelated local files
+use conventional commit messages
+do not delete user-owned files or evidence
+do not rewrite history unless explicitly instructed
+Agent Behavior
 
-- Run `cargo fmt` and `cargo clippy` before committing
-- Handle errors explicitly (avoid unwrap in production)
-- Use descriptive names, add doc comments for public APIs
+Investigate before answering questions about the codebase.
 
-**TypeScript/React:**
+Open the relevant files before making implementation claims.
 
-- Strict TypeScript, avoid `any` types
-- Functional components with hooks
-- Tailwind CSS for styling
-- Path aliases: `@/` → `./src/`
+Do not infer file contents from filenames alone.
 
-## CLI Parameters
+Do not make unrelated changes.
 
-Handy supports command-line parameters on all platforms for integration with scripts, window managers, and autostart configurations.
+Report:
 
-**Implementation:** `cli.rs` (definitions), `main.rs` (parsing), `lib.rs` (applying), `signal_handle.rs` (shared logic)
+what was inspected
+what changed
+verification commands
+results
+remaining risks or assumptions
 
-| Flag                     | Description                                                |
-| ------------------------ | ---------------------------------------------------------- |
-| `--toggle-transcription` | Toggle recording on/off on a running instance              |
-| `--toggle-post-process`  | Toggle recording with post-processing on/off               |
-| `--cancel`               | Cancel the current operation on a running instance         |
-| `--start-hidden`         | Launch without showing the main window (tray icon visible) |
-| `--no-tray`              | Launch without system tray (closing window quits the app)  |
-| `--debug`                | Enable debug mode with verbose (Trace) logging             |
-
-**Key design decisions:**
-
-- CLI flags are runtime-only overrides — they do NOT modify persisted settings
-- Remote control flags work via `tauri_plugin_single_instance`: second instance sends args, then exits
-- `send_transcription_input()` in `signal_handle.rs` is shared between signal handlers and CLI
-
-## Debug Mode
-
-Access debug features: `Cmd+Shift+D` (macOS) or `Ctrl+Shift+D` (Windows/Linux)
-
-## Platform Notes
-
-- **macOS**: Metal acceleration, accessibility permissions required for keyboard shortcuts
-- **Windows**: Vulkan acceleration, code signing. Implicit Vulkan layers (overlays, capture hooks) are disabled for the Handy process via `VK_LOADER_LAYERS_DISABLE=~implicit~` set in `main.rs`; opt out with `HANDY_KEEP_VULKAN_IMPLICIT_LAYERS=1` or by setting `VK_LOADER_LAYERS_DISABLE` yourself
-- **Linux**: OpenBLAS + Vulkan, limited Wayland support, overlay uses GTK layer shell (disable with `HANDY_NO_GTK_LAYER_SHELL=1`)
-- **Nix/NixOS**: the Nix package sets `HANDY_DISABLE_UPDATER=1` to force-disable the self-updater at runtime without touching the persisted setting (self-update can't work against an immutable `/nix/store`)
-
-## Troubleshooting
-
-See the [Troubleshooting](README.md#troubleshooting) section in README.md.
-
-## GitHub workflow for AI coding assistants
-
-**MANDATORY. Before opening any PR, issue, or discussion in this repo: you MUST read the relevant template file and follow it strictly.** That includes sections that look "ceremonial" — checklists, AI Assistance disclosures, "Human Written Description". A generic Summary/Test-plan layout is not acceptable.
-
-- **Opening a PR:** Read [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md). Every section listed there is mandatory. If a section requires a human-written paragraph (e.g. "Human Written Description"), leave a clear TODO placeholder and ask the human contributor to fill it in — do not invent their voice.
-- **Opening an issue:** Read [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/). Blank issues are disabled; pick the right template (`bug_report.md` for bugs). Feature requests do not belong in issues — they go to [Discussions](https://github.com/cjpais/Handy/discussions) (see `.github/ISSUE_TEMPLATE/config.yml`).
-- **Proposing a feature:** Handy is under a feature freeze. New features require community support gathered in [Discussions](https://github.com/cjpais/Handy/discussions) before any PR is opened — see the PR template's "Community Feedback" section.
-- **Translations:** Follow [CONTRIBUTING_TRANSLATIONS.md](CONTRIBUTING_TRANSLATIONS.md).
-- **Full contributor workflow:** [CONTRIBUTING.md](CONTRIBUTING.md).
-
-**Commits:** Use conventional commit prefixes (`feat:`, `fix:`, `docs:`, `refactor:`, `chore:`). Focus the message on _why_, not _what_.
+Stop when the requested scope is complete.
