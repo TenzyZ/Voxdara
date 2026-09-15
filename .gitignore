@@ -45,3 +45,7 @@ result
 
 # Python bytecode (scripts/)
 __pycache__/
+
+.codex/
+/.agents/mcp_config.json
+/.serena/logs/
