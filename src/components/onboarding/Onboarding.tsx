@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { ChevronDown } from "lucide-react";
+import { ChevronDownIcon } from "../icons";
 import type { ModelInfo } from "@/bindings";
 import type { ModelCardStatus } from "./ModelCard";
 import ModelCard, { isLegacySource } from "./ModelCard";
-import HandyTextLogo from "../icons/HandyTextLogo";
+import VoxdaraWordmark from "../icons/VoxdaraWordmark";
 import { useModelStore } from "../../stores/modelStore";
 
 interface OnboardingProps {
@@ -162,7 +162,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
   return (
     <div className="h-screen w-full flex flex-col p-6 gap-4">
       <div className="flex flex-col items-center gap-2 shrink-0">
-        <HandyTextLogo width={200} />
+        <VoxdaraWordmark width={200} />
         <p className="text-text/70 max-w-md font-medium mx-auto">
           {t("onboarding.subtitle")}
         </p>
@@ -242,10 +242,11 @@ const Onboarding: React.FC<OnboardingProps> = ({
                     : t("onboarding.showAllModels", {
                         total: downloadable.length,
                       })}
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${
+                  <ChevronDownIcon
+                    className={`size-4 transition-[transform] duration-150 ${
                       showAll ? "rotate-180" : ""
                     }`}
+                    aria-hidden="true"
                   />
                 </button>
               )}

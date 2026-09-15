@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { InfoIcon } from "../icons";
 import { Tooltip } from "./Tooltip";
 
 interface SettingContainerProps {
@@ -48,8 +49,8 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
   };
 
   const containerClasses = grouped
-    ? "px-4 p-2"
-    : "px-4 p-2 rounded-lg border border-mid-gray/20";
+    ? "min-h-12 px-4 py-2"
+    : "min-h-12 rounded-lg border border-border bg-surface px-4 py-2";
 
   if (layout === "stacked") {
     if (descriptionMode === "tooltip") {
@@ -68,11 +69,8 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
               onMouseLeave={() => setShowTooltip(false)}
               onClick={toggleTooltip}
             >
-              <svg
-                className="w-4 h-4 text-mid-gray cursor-help hover:text-logo-primary transition-colors duration-200 select-none"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <InfoIcon
+                className="h-4 w-4 cursor-help select-none rounded text-text-muted transition-colors duration-150 hover:text-text focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
                 aria-label="More information"
                 role="button"
                 tabIndex={0}
@@ -82,19 +80,10 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
                     toggleTooltip();
                   }
                 }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+              />
               {showTooltip && (
                 <Tooltip targetRef={tooltipRef} position="top">
-                  <p className="text-sm text-center leading-relaxed">
-                    {description}
-                  </p>
+                  <p className="text-center text-xs">{description}</p>
                 </Tooltip>
               )}
             </div>
@@ -110,7 +99,9 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
           <h3 className={`text-sm font-medium ${disabled ? "opacity-50" : ""}`}>
             {title}
           </h3>
-          <p className={`text-sm ${disabled ? "opacity-50" : ""}`}>
+          <p
+            className={`mt-0.5 text-xs text-text-muted ${disabled ? "opacity-50" : ""}`}
+          >
             {description}
           </p>
         </div>
@@ -121,8 +112,8 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
 
   // Horizontal layout (default)
   const horizontalContainerClasses = grouped
-    ? "flex items-center justify-between min-h-12 px-4 p-2"
-    : "flex items-center justify-between min-h-12 px-4 p-2 rounded-lg border border-mid-gray/20";
+    ? "flex min-h-12 items-center justify-between px-4 py-2"
+    : "flex min-h-12 items-center justify-between rounded-lg border border-border bg-surface px-4 py-2";
 
   if (descriptionMode === "tooltip") {
     return (
@@ -141,11 +132,8 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
               onMouseLeave={() => setShowTooltip(false)}
               onClick={toggleTooltip}
             >
-              <svg
-                className="w-4 h-4 text-mid-gray cursor-help hover:text-logo-primary transition-colors duration-200 select-none"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <InfoIcon
+                className="h-4 w-4 cursor-help select-none rounded text-text-muted transition-colors duration-150 hover:text-text focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
                 aria-label="More information"
                 role="button"
                 tabIndex={0}
@@ -155,19 +143,10 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
                     toggleTooltip();
                   }
                 }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+              />
               {showTooltip && (
                 <Tooltip targetRef={tooltipRef} position={tooltipPosition}>
-                  <p className="text-sm text-center leading-relaxed">
-                    {description}
-                  </p>
+                  <p className="text-center text-xs">{description}</p>
                 </Tooltip>
               )}
             </div>
@@ -184,7 +163,9 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
         <h3 className={`text-sm font-medium ${disabled ? "opacity-50" : ""}`}>
           {title}
         </h3>
-        <p className={`text-sm ${disabled ? "opacity-50" : ""}`}>
+        <p
+          className={`mt-0.5 text-xs text-text-muted ${disabled ? "opacity-50" : ""}`}
+        >
           {description}
         </p>
       </div>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#fff">
+  <defs>
+    <mask id="recording-cutout" maskUnits="userSpaceOnUse">
+      <rect width="64" height="64" fill="#000"/>
+      <circle cx="32" cy="32" r="24" fill="#fff"/>
+      <g transform="translate(17.6 17.6) scale(1.2)" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19v3"/>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+        <rect x="9" y="2" width="6" height="13" rx="3"/>
+      </g>
+    </mask>
+  </defs>
+  <rect width="64" height="64" mask="url(#recording-cutout)"/>
+</svg>

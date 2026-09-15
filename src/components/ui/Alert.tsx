@@ -1,5 +1,5 @@
 import React from "react";
-import { AlertCircle, AlertTriangle, Info, CheckCircle } from "lucide-react";
+import { ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from "../icons";
 
 type AlertVariant = "error" | "warning" | "info" | "success";
 
@@ -16,32 +16,32 @@ const variantStyles: Record<
   { container: string; icon: string; text: string }
 > = {
   error: {
-    container: "bg-red-500/10",
-    icon: "text-red-500",
-    text: "text-red-400",
+    container: "bg-error/10",
+    icon: "text-error",
+    text: "text-error",
   },
   warning: {
-    container: "bg-yellow-500/10",
-    icon: "text-yellow-500",
-    text: "text-yellow-400",
+    container: "bg-warning/10",
+    icon: "text-warning",
+    text: "text-text",
   },
   info: {
-    container: "bg-blue-500/10",
-    icon: "text-blue-500",
-    text: "text-blue-400",
+    container: "bg-activity/10",
+    icon: "text-activity",
+    text: "text-text",
   },
   success: {
-    container: "bg-green-500/10",
-    icon: "text-green-500",
-    text: "text-green-400",
+    container: "bg-success/10",
+    icon: "text-success",
+    text: "text-text",
   },
 };
 
 const variantIcons: Record<AlertVariant, React.ElementType> = {
-  error: AlertCircle,
-  warning: AlertTriangle,
-  info: Info,
-  success: CheckCircle,
+  error: ErrorIcon,
+  warning: WarningIcon,
+  info: InfoIcon,
+  success: SuccessIcon,
 };
 
 export const Alert: React.FC<AlertProps> = ({
@@ -55,9 +55,12 @@ export const Alert: React.FC<AlertProps> = ({
 
   return (
     <div
-      className={`flex items-start gap-3 p-4 ${styles.container} ${contained ? "" : "rounded-lg"} ${className}`}
+      className={`flex items-start gap-3 p-3 ${styles.container} ${contained ? "" : "rounded-lg"} ${className}`}
     >
-      <Icon className={`w-5 h-5 shrink-0 mt-0.5 ${styles.icon}`} />
+      <Icon
+        className={`mt-0.5 size-5 shrink-0 ${styles.icon}`}
+        aria-hidden="true"
+      />
       <p className={`text-sm ${styles.text}`}>{children}</p>
     </div>
   );

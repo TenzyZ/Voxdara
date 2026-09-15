@@ -298,11 +298,11 @@ function App() {
         unstyled: true,
         classNames: {
           toast:
-            "bg-background border border-mid-gray/20 rounded-lg shadow-lg px-4 py-3 flex items-center gap-3 text-sm",
+            "flex items-center gap-3 rounded-lg border border-border bg-surface-raised px-4 py-3 text-sm text-text shadow-raised",
           title: "font-medium",
-          description: "text-mid-gray",
+          description: "text-text-muted",
           actionButton:
-            "px-2 py-1 text-xs font-medium rounded-lg border bg-mid-gray/10 border-mid-gray/20 hover:bg-background-ui/30 hover:border-logo-primary cursor-pointer whitespace-nowrap",
+            "h-7 whitespace-nowrap rounded-md border border-border-strong bg-surface px-2.5 text-xs font-medium text-text transition-colors duration-150 hover:bg-surface-subtle active:bg-selected cursor-pointer focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring",
         },
       }}
     />
