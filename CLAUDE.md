@@ -137,16 +137,21 @@ Primary inherited development commands:
 ```bash
 bun install
 bun run tauri dev
+```
 
 Frontend-only commands:
 
+```bash
 bun run dev
 bun run build
+```
 
 Validation commands when appropriate:
 
+```bash
 bun run lint
 bun run format:check
+```
 
 For Windows, BUILD.md documents requirements including:
 
@@ -158,7 +163,7 @@ Vulkan SDK
 
 Do not invent dependencies or installation requirements not confirmed by repository files or official documentation.
 
-Windows First
+## Windows First
 
 Voxdara's first supported platform is Windows.
 
@@ -172,7 +177,7 @@ deterministic focus and clipboard behavior
 
 Do not expand platform scope without explicit approval.
 
-Engineering Rules
+## Engineering Rules
 
 Before modifying code:
 
@@ -203,7 +208,8 @@ confirmed repository fact
 inference
 recommendation
 experiment
-Voxdara Product Principles
+
+## Voxdara Product Principles
 
 Optimize for:
 
@@ -217,7 +223,8 @@ replaceable model backends
 measurable performance
 small controlled scope
 finished usable product over oversized prototype
-Privacy
+
+## Privacy
 
 Local mode must not transmit audio or transcripts off-device.
 
@@ -231,7 +238,7 @@ API keys
 
 Do not add telemetry by default.
 
-Model Terminology
+## Model Terminology
 
 Use precise terminology:
 
@@ -241,7 +248,7 @@ speech-language model = model that directly consumes audio and performs language
 
 Do not call a text cleanup model a speech LLM.
 
-Git Workflow
+## Git Workflow
 
 Use one branch and one pull request per development phase.
 
@@ -258,7 +265,8 @@ avoid staging unrelated local files
 use conventional commit messages
 do not delete user-owned files or evidence
 do not rewrite history unless explicitly instructed
-Agent Behavior
+
+## Agent Behavior
 
 Investigate before answering questions about the codebase.
 
