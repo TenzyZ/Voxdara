@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import HandyTextLogo from "./icons/HandyTextLogo";
+import VoxdaraWordmark from "./icons/VoxdaraWordmark";
 import {
   AboutIcon,
   AdvancedIcon,
@@ -101,7 +101,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div className="flex h-full w-40 flex-col items-center border-e border-border px-2">
-      <HandyTextLogo width={120} className="m-4" />
+      <VoxdaraWordmark width={128} className="m-4" />
       <div className="flex w-full flex-col items-center gap-1 border-t border-border pt-2">
         {availableSections.map((section) => {
           const Icon = section.icon;

@@ -23,17 +23,17 @@ const variantStyles: Record<
   warning: {
     container: "bg-warning/10",
     icon: "text-warning",
-    text: "text-warning",
+    text: "text-text",
   },
   info: {
     container: "bg-activity/10",
     icon: "text-activity",
-    text: "text-activity",
+    text: "text-text",
   },
   success: {
     container: "bg-success/10",
     icon: "text-success",
-    text: "text-success",
+    text: "text-text",
   },
 };
 

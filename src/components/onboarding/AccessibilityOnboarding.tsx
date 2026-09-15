@@ -10,8 +10,8 @@ import {
 import { toast } from "sonner";
 import { commands } from "@/bindings";
 import { useSettingsStore } from "@/stores/settingsStore";
-import HandyTextLogo from "../icons/HandyTextLogo";
-import { Keyboard, Mic, Check, Loader2 } from "lucide-react";
+import { CheckIcon, KeyboardIcon, LoadingIcon, MicrophoneIcon } from "../icons";
+import VoxdaraWordmark from "../icons/VoxdaraWordmark";
 
 interface AccessibilityOnboardingProps {
   onComplete: () => void;
@@ -301,7 +301,10 @@ const AccessibilityOnboarding: React.FC<AccessibilityOnboardingProps> = ({
   if (isChecking) {
     return (
       <div className="h-screen w-full flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-text/50" />
+        <LoadingIcon
+          className="size-6 animate-spin text-text/50"
+          aria-hidden="true"
+        />
       </div>
     );
   }
@@ -311,7 +314,7 @@ const AccessibilityOnboarding: React.FC<AccessibilityOnboardingProps> = ({
     return (
       <div className="h-screen w-full flex flex-col items-center justify-center gap-4">
         <div className="p-4 rounded-full bg-emerald-500/20">
-          <Check className="w-12 h-12 text-emerald-400" />
+          <CheckIcon className="size-6 text-emerald-400" aria-hidden="true" />
         </div>
         <p className="text-lg font-medium text-text">
           {t("onboarding.permissions.allGranted")}
@@ -324,7 +327,7 @@ const AccessibilityOnboarding: React.FC<AccessibilityOnboardingProps> = ({
   return (
     <div className="h-screen w-full flex flex-col p-6 gap-6 items-center justify-center">
       <div className="flex flex-col items-center gap-2">
-        <HandyTextLogo width={200} />
+        <VoxdaraWordmark width={200} />
       </div>
 
       <div className="max-w-md w-full flex flex-col items-center gap-4">
@@ -342,7 +345,10 @@ const AccessibilityOnboarding: React.FC<AccessibilityOnboardingProps> = ({
           <div className="w-full p-4 rounded-lg bg-white/5 border border-mid-gray/20">
             <div className="flex items-center gap-4">
               <div className="p-3 rounded-full bg-logo-primary/20 shrink-0">
-                <Mic className="w-6 h-6 text-logo-primary" />
+                <MicrophoneIcon
+                  className="w-6 h-6 text-logo-primary"
+                  aria-hidden="true"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-medium text-text">
@@ -353,12 +359,15 @@ const AccessibilityOnboarding: React.FC<AccessibilityOnboardingProps> = ({
                 </p>
                 {permissions.microphone === "granted" ? (
                   <div className="flex items-center gap-2 text-emerald-400 text-sm">
-                    <Check className="w-4 h-4" />
+                    <CheckIcon className="w-4 h-4" aria-hidden="true" />
                     {t("onboarding.permissions.granted")}
                   </div>
                 ) : permissions.microphone === "waiting" ? (
                   <div className="flex items-center gap-2 text-text/50 text-sm">
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <LoadingIcon
+                      className="w-4 h-4 animate-spin"
+                      aria-hidden="true"
+                    />
                     {t("onboarding.permissions.waiting")}
                   </div>
                 ) : (
@@ -381,7 +390,10 @@ const AccessibilityOnboarding: React.FC<AccessibilityOnboardingProps> = ({
           <div className="w-full p-4 rounded-lg bg-white/5 border border-mid-gray/20">
             <div className="flex items-center gap-4">
               <div className="p-3 rounded-full bg-logo-primary/20 shrink-0">
-                <Keyboard className="w-6 h-6 text-logo-primary" />
+                <KeyboardIcon
+                  className="w-6 h-6 text-logo-primary"
+                  aria-hidden="true"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-medium text-text">
@@ -392,12 +404,15 @@ const AccessibilityOnboarding: React.FC<AccessibilityOnboardingProps> = ({
                 </p>
                 {permissions.accessibility === "granted" ? (
                   <div className="flex items-center gap-2 text-emerald-400 text-sm">
-                    <Check className="w-4 h-4" />
+                    <CheckIcon className="w-4 h-4" aria-hidden="true" />
                     {t("onboarding.permissions.granted")}
                   </div>
                 ) : permissions.accessibility === "waiting" ? (
                   <div className="flex items-center gap-2 text-text/50 text-sm">
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <LoadingIcon
+                      className="w-4 h-4 animate-spin"
+                      aria-hidden="true"
+                    />
                     {t("onboarding.permissions.waiting")}
                   </div>
                 ) : (

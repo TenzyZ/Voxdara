@@ -18,7 +18,6 @@
   --light-color-success: #1f7a45;
   --light-color-warning: #b45309;
   --light-color-error: #c81e1e;
-  --light-color-logo-stroke: #382731;
   --light-shadow-raised:
     0 4px 12px rgb(17 19 21 / 0.1), 0 1px 2px rgb(17 19 21 / 0.06);
 
@@ -41,7 +40,6 @@
   --dark-color-success: #4cc37a;
   --dark-color-warning: #fbbf24;
   --dark-color-error: #f87171;
-  --dark-color-logo-stroke: #fad1ed;
   --dark-shadow-raised: 0 6px 16px rgb(0 0 0 / 0.45);
 
   --color-background: var(--light-color-background);
@@ -63,8 +61,6 @@
   --color-success: var(--light-color-success);
   --color-warning: var(--light-color-warning);
   --color-error: var(--light-color-error);
-  --color-logo-stroke: var(--light-color-logo-stroke);
-  --color-text-stroke: #f6f6f6;
   --shadow-raised: var(--light-shadow-raised);
 
   /* Compatibility aliases for untouched inherited UI. */
@@ -94,7 +90,6 @@
     --color-success: var(--dark-color-success);
     --color-warning: var(--dark-color-warning);
     --color-error: var(--dark-color-error);
-    --color-logo-stroke: var(--dark-color-logo-stroke);
     --shadow-raised: var(--dark-shadow-raised);
   }
 }
@@ -119,7 +114,6 @@
   --color-success: var(--light-color-success);
   --color-warning: var(--light-color-warning);
   --color-error: var(--light-color-error);
-  --color-logo-stroke: var(--light-color-logo-stroke);
   --shadow-raised: var(--light-shadow-raised);
 }
 
@@ -143,6 +137,5 @@
   --color-success: var(--dark-color-success);
   --color-warning: var(--dark-color-warning);
   --color-error: var(--dark-color-error);
-  --color-logo-stroke: var(--dark-color-logo-stroke);
   --shadow-raised: var(--dark-shadow-raised);
 }

@@ -14,4 +14,7 @@ export {
   Sparkles as PostProcessingIcon,
   FlaskConical as DebugIcon,
   Info as AboutIcon,
+  Mic as MicrophoneIcon,
+  Keyboard as KeyboardIcon,
+  Loader2 as LoadingIcon,
 } from "lucide-react";
