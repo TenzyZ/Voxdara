@@ -88,8 +88,6 @@ Report bugs and propose changes through the Voxdara repository's [Issues](https:
 
 Voxdara is available under the [MIT License](LICENSE).
 
-Voxdara is a fork of [Handy by CJ Pais](https://github.com/cjpais/Handy), used under the MIT license. Voxdara is an independent project and is not affiliated with or endorsed by Handy.
-
 Technical credits:
 
 - Whisper by OpenAI
