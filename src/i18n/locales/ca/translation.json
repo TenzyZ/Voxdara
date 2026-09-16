@@ -101,7 +101,7 @@
     },
     "permissions": {
       "title": "Permisos necessaris",
-      "description": "El Handy demana alguns permisos per funcionar correctament.",
+      "description": "El Voxdara demana alguns permisos per funcionar correctament.",
       "microphone": {
         "title": "Accés al micròfon",
         "description": "Necessari per escoltar la vostra veu i transcriure-la."
@@ -161,7 +161,7 @@
     "general": {
       "title": "General",
       "shortcut": {
-        "title": "Dreceres del Handy",
+        "title": "Dreceres del Voxdara",
         "description": "Configura les dreceres de teclat per iniciar l'enregistrament de veu per a la transcripció",
         "loading": "S'estan carregant les dreceres...",
         "none": "No hi ha cap drecera configurada",
@@ -225,7 +225,7 @@
       },
       "rescan": {
         "label": "Torna a cercar",
-        "tooltip": "Torna a cercar models afegits a la carpeta de models o a la memòria cau de Hugging Face des de fora del Handy"
+        "tooltip": "Torna a cercar models afegits a la carpeta de models o a la memòria cau de Hugging Face des de fora del Voxdara"
       },
       "noModelsMatch": "Cap model no coincideix amb aquest filtre."
     },
@@ -293,11 +293,11 @@
       },
       "autostart": {
         "label": "Inicia en entrar a la sessió",
-        "description": "Inicia automàticament el Handy quan entreu a la sessió de l'ordinador."
+        "description": "Inicia automàticament el Voxdara quan entreu a la sessió de l'ordinador."
       },
       "showTrayIcon": {
         "label": "Mostra la icona a la safata",
-        "description": "Mostra la icona del Handy a la safata del sistema."
+        "description": "Mostra la icona del Voxdara a la safata del sistema."
       },
       "overlay": {
         "style": {
@@ -607,32 +607,27 @@
       "title": "Quant a",
       "version": {
         "title": "Versió",
-        "description": "Versió actual del Handy"
+        "description": "Versió actual del Voxdara"
       },
       "whatsNewUpdates": {
         "label": "Mostra les novetats",
-        "description": "Mostra les notes de la versió després d'actualitzar el Handy"
+        "description": "Mostra les notes de la versió després d'actualitzar el Voxdara"
       },
       "appDataDirectory": {
         "title": "Directori de dades de l'aplicació",
-        "description": "Ubicació on el Handy desa les dades"
+        "description": "Ubicació on el Voxdara desa les dades"
       },
       "sourceCode": {
         "title": "Codi font",
         "description": "Consulta el codi font i col·laboreu-hi",
         "button": "Mostra al GitHub"
       },
-      "supportDevelopment": {
-        "title": "Dona suport al desenvolupament",
-        "description": "Ajudeu-nos a continuar desenvolupant el Handy",
-        "button": "Feu una donació"
-      },
       "acknowledgments": {
         "title": "Agraïments",
         "ggml": {
           "title": "ggml",
           "description": "Biblioteca de tensors d'alt rendiment per a la inferència d'aprenentatge automàtic al dispositiu",
-          "details": "La transcripció local de veu a text del Handy es basa en el transcribe.cpp i el ggml. Gràcies a la gran feina de Georgi Gerganov i dels col·laboradors."
+          "details": "La transcripció local de veu a text del Voxdara es basa en el transcribe.cpp i el ggml. Gràcies a la gran feina de Georgi Gerganov i dels col·laboradors."
         }
       }
     }
@@ -653,7 +648,7 @@
     "portableUpdateBrowseButton": "Obriu GitHub Releases"
   },
   "whatsNew": {
-    "title": "Novetats del Handy v{{version}}"
+    "title": "Novetats del Voxdara v{{version}}"
   },
   "common": {
     "loading": "S'està carregant...",
@@ -688,11 +683,11 @@
   },
   "appLanguage": {
     "title": "Llengua de l'aplicació",
-    "description": "Canvia la llengua de la interfície del Handy"
+    "description": "Canvia la llengua de la interfície del Voxdara"
   },
   "theme": {
     "title": "Tema de l'aplicació",
-    "description": "Tria si el Handy segueix el tema del sistema o es manté en mode clar o fosc",
+    "description": "Tria si el Voxdara segueix el tema del sistema o es manté en mode clar o fosc",
     "options": {
       "system": "Sistema",
       "light": "Clar",

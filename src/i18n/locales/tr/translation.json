@@ -101,7 +101,7 @@
     },
     "permissions": {
       "title": "İzinler Gerekli",
-      "description": "Handy'nin düzgün çalışabilmesi için birkaç izne ihtiyacı var.",
+      "description": "Voxdara'nın düzgün çalışabilmesi için birkaç izne ihtiyacı var.",
       "microphone": {
         "title": "Mikrofon Erişimi",
         "description": "Sesinizi transkripsiyon için alabilmek için gereklidir."
@@ -175,13 +175,13 @@
       "searchPlaceholder": "Modelleri ada göre ara…",
       "rescan": {
         "label": "Yeniden Tara",
-        "tooltip": "Handy dışında modeller klasörüne veya Hugging Face önbelleğine eklenen modelleri yeniden tara"
+        "tooltip": "Voxdara dışında modeller klasörüne veya Hugging Face önbelleğine eklenen modelleri yeniden tara"
       }
     },
     "general": {
       "title": "Genel",
       "shortcut": {
-        "title": "Handy Kısayolları",
+        "title": "Voxdara Kısayolları",
         "description": "Sesle yazma kaydını başlatmak için klavye kısayollarını yapılandırın",
         "loading": "Kısayollar yükleniyor...",
         "none": "Kısayol yapılandırılmadı",
@@ -293,11 +293,11 @@
       },
       "autostart": {
         "label": "Başlangıçta Çalıştır",
-        "description": "Bilgisayara giriş yaptığınızda Handy otomatik olarak başlatılır."
+        "description": "Bilgisayara giriş yaptığınızda Voxdara otomatik olarak başlatılır."
       },
       "showTrayIcon": {
         "label": "Tepsi Simgesini Göster",
-        "description": "Handy simgesini sistem tepsisinde göster."
+        "description": "Voxdara simgesini sistem tepsisinde göster."
       },
       "overlay": {
         "style": {
@@ -607,33 +607,28 @@
       "title": "Hakkında",
       "version": {
         "title": "Sürüm",
-        "description": "Handy'nin mevcut sürümü"
+        "description": "Voxdara'nın mevcut sürümü"
       },
       "appDataDirectory": {
         "title": "Uygulama Veri Dizini",
-        "description": "Handy'nin verilerini sakladığı konum"
+        "description": "Voxdara'nın verilerini sakladığı konum"
       },
       "sourceCode": {
         "title": "Kaynak Kodu",
         "description": "Kaynak kodunu görüntüle ve katkıda bulun",
         "button": "GitHub'da Görüntüle"
       },
-      "supportDevelopment": {
-        "title": "Geliştirmeyi Destekle",
-        "description": "Handy'yi geliştirmeye devam etmemize yardımcı olun",
-        "button": "Bağış Yap"
-      },
       "acknowledgments": {
         "title": "Teşekkürler",
         "ggml": {
           "title": "ggml",
           "description": "Cihaz üzerinde makine öğrenmesi çıkarımı için yüksek performanslı tensör kütüphanesi",
-          "details": "Handy'nin yerel konuşmadan metne dönüştürme özelliği transcribe.cpp ve ggml üzerine kuruludur. Georgi Gerganov'a ve katkıda bulunanlara harika çalışmaları için teşekkür ederiz."
+          "details": "Voxdara'nın yerel konuşmadan metne dönüştürme özelliği transcribe.cpp ve ggml üzerine kuruludur. Georgi Gerganov'a ve katkıda bulunanlara harika çalışmaları için teşekkür ederiz."
         }
       },
       "whatsNewUpdates": {
         "label": "Yenilikleri Göster",
-        "description": "Handy güncellemelerinden sonra sürüm notlarını göster"
+        "description": "Voxdara güncellemelerinden sonra sürüm notlarını göster"
       }
     }
   },
@@ -685,11 +680,11 @@
   },
   "appLanguage": {
     "title": "Uygulama Dili",
-    "description": "Handy arayüzünün dilini değiştirin"
+    "description": "Voxdara arayüzünün dilini değiştirin"
   },
   "theme": {
     "title": "Uygulama Teması",
-    "description": "Handy'nin sistem temasını izlemesini ya da açık veya koyu kalmasını seçin",
+    "description": "Voxdara'nın sistem temasını izlemesini ya da açık veya koyu kalmasını seçin",
     "options": {
       "system": "Sistem",
       "light": "Açık",
@@ -701,7 +696,7 @@
     "processing": "İşleniyor..."
   },
   "whatsNew": {
-    "title": "Handy v{{version}} yenilikleri"
+    "title": "Voxdara v{{version}} yenilikleri"
   },
   "secureInput": {
     "blockedWithCulprit_one": "{{name}} 1 kısayolu engelliyor olabilir",
