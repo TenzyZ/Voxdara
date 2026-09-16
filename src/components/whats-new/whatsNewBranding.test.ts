@@ -80,7 +80,10 @@ for (const locale of localeDirectories) {
       "settings.advanced.showTrayIcon.description",
       translation.settings.advanced.showTrayIcon.description,
     ],
-    ["settings.models.rescan.tooltip", translation.settings.models.rescan.tooltip],
+    [
+      "settings.models.rescan.tooltip",
+      translation.settings.models.rescan.tooltip,
+    ],
     [
       "settings.general.shortcut.title",
       translation.settings.general.shortcut.title,
@@ -114,6 +117,4 @@ const releaseNote = readFileSync(
 assert.ok(releaseNote.includes("Voxdara"), "0.9.7 release note lacks Voxdara");
 assert.ok(!releaseNote.includes("Handy"), "0.9.7 release note contains Handy");
 
-console.log(
-  `whatsNewBranding: ${localeDirectories.length} locales passed`,
-);
+console.log(`whatsNewBranding: ${localeDirectories.length} locales passed`);
