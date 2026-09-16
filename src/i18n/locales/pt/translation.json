@@ -101,7 +101,7 @@
     },
     "permissions": {
       "title": "Permissões Necessárias",
-      "description": "O Handy precisa de algumas permissões para funcionar corretamente.",
+      "description": "O Voxdara precisa de algumas permissões para funcionar corretamente.",
       "microphone": {
         "title": "Acesso ao Microfone",
         "description": "Necessário para ouvir sua voz para transcrição."
@@ -161,7 +161,7 @@
     "general": {
       "title": "Geral",
       "shortcut": {
-        "title": "Atalhos do Handy",
+        "title": "Atalhos do Voxdara",
         "description": "Configure atalhos de teclado para iniciar a gravação de voz para texto",
         "loading": "Carregando atalhos...",
         "none": "Nenhum atalho configurado",
@@ -226,7 +226,7 @@
       "searchPlaceholder": "Buscar modelos por nome…",
       "rescan": {
         "label": "Reescanear",
-        "tooltip": "Reescaneia em busca de modelos adicionados à pasta de modelos ou ao cache do Hugging Face fora do Handy"
+        "tooltip": "Reescaneia em busca de modelos adicionados à pasta de modelos ou ao cache do Hugging Face fora do Voxdara"
       }
     },
     "sound": {
@@ -293,11 +293,11 @@
       },
       "autostart": {
         "label": "Iniciar na Inicialização",
-        "description": "Iniciar automaticamente o Handy quando você fizer login no seu computador."
+        "description": "Iniciar automaticamente o Voxdara quando você fizer login no seu computador."
       },
       "showTrayIcon": {
         "label": "Mostrar ícone na bandeja",
-        "description": "Exibir o ícone do Handy na bandeja do sistema."
+        "description": "Exibir o ícone do Voxdara na bandeja do sistema."
       },
       "overlay": {
         "style": {
@@ -607,33 +607,28 @@
       "title": "Sobre",
       "version": {
         "title": "Versão",
-        "description": "Versão atual do Handy"
+        "description": "Versão atual do Voxdara"
       },
       "appDataDirectory": {
         "title": "Diretório de Dados do App",
-        "description": "Local onde o Handy armazena seus dados"
+        "description": "Local onde o Voxdara armazena seus dados"
       },
       "sourceCode": {
         "title": "Código Fonte",
         "description": "Visualizar código fonte e contribuir",
         "button": "Ver no GitHub"
       },
-      "supportDevelopment": {
-        "title": "Apoiar o Desenvolvimento",
-        "description": "Ajude-nos a continuar construindo o Handy",
-        "button": "Doar"
-      },
       "acknowledgments": {
         "title": "Agradecimentos",
         "ggml": {
           "title": "ggml",
           "description": "Inferência de alto desempenho do modelo de reconhecimento automático de fala Whisper da OpenAI",
-          "details": "O Handy usa ggml para processamento rápido e local de fala para texto. Agradecemos ao incrível trabalho de Georgi Gerganov e colaboradores."
+          "details": "O Voxdara usa ggml para processamento rápido e local de fala para texto. Agradecemos ao incrível trabalho de Georgi Gerganov e colaboradores."
         }
       },
       "whatsNewUpdates": {
         "label": "Mostrar novidades",
-        "description": "Mostrar notas de versão após atualizações do Handy"
+        "description": "Mostrar notas de versão após atualizações do Voxdara"
       }
     }
   },
@@ -685,11 +680,11 @@
   },
   "appLanguage": {
     "title": "Idioma da Aplicação",
-    "description": "Alterar o idioma da interface do Handy"
+    "description": "Alterar o idioma da interface do Voxdara"
   },
   "theme": {
     "title": "Tema do aplicativo",
-    "description": "Escolha se o Handy segue o tema do sistema ou permanece claro ou escuro",
+    "description": "Escolha se o Voxdara segue o tema do sistema ou permanece claro ou escuro",
     "options": {
       "system": "Sistema",
       "light": "Claro",
@@ -701,7 +696,7 @@
     "processing": "Processando..."
   },
   "whatsNew": {
-    "title": "Novidades no Handy v{{version}}"
+    "title": "Novidades no Voxdara v{{version}}"
   },
   "secureInput": {
     "blockedWithCulprit_one": "{{name}} pode estar bloqueando 1 atalho",

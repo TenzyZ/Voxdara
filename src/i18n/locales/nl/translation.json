@@ -16,7 +16,7 @@
     "postProcessing": "Naverwerking",
     "history": "Geschiedenis",
     "debug": "Probleemoplossing",
-    "about": "Over Handy"
+    "about": "Over"
   },
   "onboarding": {
     "subtitle": "Kies een transcriptiemodel om aan de slag te gaan",
@@ -101,7 +101,7 @@
     },
     "permissions": {
       "title": "Machtigingen vereist",
-      "description": "Handy heeft een aantal machtigingen nodig om goed te kunnen werken.",
+      "description": "Voxdara heeft een aantal machtigingen nodig om goed te kunnen werken.",
       "microphone": {
         "title": "Microfoontoegang",
         "description": "Vereist om je stem op te nemen voor transcriptie."
@@ -225,7 +225,7 @@
       },
       "rescan": {
         "label": "Opnieuw scannen",
-        "tooltip": "Scannen naar modellen die buiten Handy om zijn toegevoegd aan de modellenmap of Hugging Face-cache"
+        "tooltip": "Scannen naar modellen die buiten Voxdara om zijn toegevoegd aan de modellenmap of Hugging Face-cache"
       },
       "noModelsMatch": "Geen modellen voldoen aan dit filter."
     },
@@ -293,11 +293,11 @@
       },
       "autostart": {
         "label": "Starten bij opstarten",
-        "description": "Handy automatisch starten zodra je inlogt op je computer."
+        "description": "Voxdara automatisch starten zodra je inlogt op je computer."
       },
       "showTrayIcon": {
         "label": "Pictogram in systeemvak tonen",
-        "description": "Toon het Handy-pictogram in het systeemvak."
+        "description": "Toon het Voxdara-pictogram in het systeemvak."
       },
       "overlay": {
         "style": {
@@ -604,35 +604,30 @@
       }
     },
     "about": {
-      "title": "Over Handy",
+      "title": "Over",
       "version": {
         "title": "Versie",
-        "description": "Huidige versie van Handy"
+        "description": "Huidige versie van Voxdara"
       },
       "whatsNewUpdates": {
         "label": "Toon 'Wat is er nieuw'",
-        "description": "Release-notes tonen nadat Handy is bijgewerkt"
+        "description": "Release-notes tonen nadat Voxdara is bijgewerkt"
       },
       "appDataDirectory": {
         "title": "App-datamap",
-        "description": "Locatie waar Handy de gegevens opslaat"
+        "description": "Locatie waar Voxdara de gegevens opslaat"
       },
       "sourceCode": {
         "title": "Broncode",
         "description": "Bekijk de broncode en draag bij",
         "button": "Bekijk op GitHub"
       },
-      "supportDevelopment": {
-        "title": "Ontwikkeling ondersteunen",
-        "description": "Help ons om te blijven bouwen aan Handy",
-        "button": "Doneren"
-      },
       "acknowledgments": {
         "title": "Dankbetuigingen",
         "ggml": {
           "title": "ggml",
           "description": "Krachtige tensorbibliotheek voor lokale AI-verwerking",
-          "details": "Handy's lokale spraak-naar-tekst is gebouwd op transcribe.cpp en ggml. Met dank aan het geweldige werk van Georgi Gerganov en alle bijdragers."
+          "details": "Voxdara's lokale spraak-naar-tekst is gebouwd op transcribe.cpp en ggml. Met dank aan het geweldige werk van Georgi Gerganov en alle bijdragers."
         }
       }
     }
@@ -653,7 +648,7 @@
     "portableUpdateBrowseButton": "GitHub Releases openen"
   },
   "whatsNew": {
-    "title": "Nieuw in Handy v{{version}}"
+    "title": "Nieuw in Voxdara v{{version}}"
   },
   "common": {
     "loading": "Laden...",
@@ -688,11 +683,11 @@
   },
   "appLanguage": {
     "title": "Interfacetaal",
-    "description": "Wijzig de taal van de Handy-interface"
+    "description": "Wijzig de taal van de Voxdara-interface"
   },
   "theme": {
     "title": "App-thema",
-    "description": "Kies of Handy het systeemthema volgt of licht of donker blijft",
+    "description": "Kies of Voxdara het systeemthema volgt of licht of donker blijft",
     "options": {
       "system": "Systeem",
       "light": "Licht",
